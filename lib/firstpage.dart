@@ -20,9 +20,8 @@ class _firstpageState extends State<firstpage> {
     var checkMic = false;
     void togglerecording() {
     SpeechApi.toggleRecord(
-      onResult: (text) => {(
-            this.text = text)
-    },
+      onResult: (text) => setState(() =>
+        (this.text = text)),
     );
     }
     return Scaffold(
