@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 // ignore: unused_import
 import 'package:device_policy_manager/device_policy_manager.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 // ignore: camel_case_types
 class firstpage extends StatefulWidget {
   const firstpage({super.key});
@@ -22,7 +23,8 @@ class firstpage extends StatefulWidget {
 class _firstpageState extends State<firstpage> {
   String text = 'My Name is Khan and I am not a terrorist';
   String tryText = 'Click';
-  
+
+  final service = FlutterBackgroundService();
   final displayOneController = TextEditingController();
   
   @override
@@ -35,6 +37,7 @@ class _firstpageState extends State<firstpage> {
         (this.text = text)),
     );
     }
+   
 
     void locking(){
       DevicePolicyManager.lockNow();
@@ -125,6 +128,7 @@ class _firstpageState extends State<firstpage> {
               ]
             ),
           ),
+          
     );  
   }
 

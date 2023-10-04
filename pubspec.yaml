@@ -39,6 +39,8 @@ dependencies:
   firebase_auth: ^4.10.1
   cloud_firestore: ^4.9.3
   device_policy_manager: ^0.0.1
+  flutter_background_service: ^5.0.1
+  flutter_local_notifications: ^15.1.2
 
 dev_dependencies:
   flutter_test:
