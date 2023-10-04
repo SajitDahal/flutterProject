@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "889695717641",
+    "project_id": "fluttapp-8db66",
+    "storage_bucket": "fluttapp-8db66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889695717641:android:06e36bfd96fe6566f0ebd8",
+        "android_client_info": {
+          "package_name": "com.example.voiceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_fg8tio_BFVw2zTntlSzeAJqdrIAMYPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
