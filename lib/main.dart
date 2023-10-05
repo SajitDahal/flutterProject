@@ -12,28 +12,28 @@ void main()async{
     const MyApp()
     );
     WidgetsFlutterBinding.ensureInitialized();
-    await initservice();
+    // await initservice();
 }
 
 final FlutterLocalNotificationsPlugin flutterLocalPlugin = FlutterLocalNotificationsPlugin();
 const AndroidNotificationChannel notificationChannel = AndroidNotificationChannel("Testing Notification", "NotiTester",
 description: "Something Descriptive", importance: Importance.high);
 
-Future <void> initservice()async{
-  await flutterLocalPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(notificationChannel);
-  var service = FlutterBackgroundService();
-    await service.configure(
-      iosConfiguration: IosConfiguration(
-          onBackground: iosBackground,
-          onForeground: onStart
-      ),
-      androidConfiguration: AndroidConfiguration(
-        onStart: onStart, 
-        autoStart: true,
-        isForegroundMode: isForegroundMode
-        )
-    );
-}
+// Future <void> initservice()async{
+//   await flutterLocalPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(notificationChannel);
+//   var service = FlutterBackgroundService();
+//     await service.configure(
+//       iosConfiguration: IosConfiguration(
+//           onBackground: iosBackground,
+//           onForeground: onStart
+//       ),
+//       androidConfiguration: AndroidConfiguration(
+//         onStart: onStart, 
+//         autoStart: true,
+//         isForegroundMode: isForegroundMode
+//         )
+//     );
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
