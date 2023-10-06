@@ -1,31 +1,30 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:voiceapp/speechapi.dart';
 
 // ignore: unused_import
-import 'package:firebase_auth/firebase_auth.dart';
-// ignore: unused_import
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-// ignore: unused_import
 import 'package:device_policy_manager/device_policy_manager.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 // ignore: camel_case_types
 class firstpage extends StatefulWidget {
   const firstpage({super.key});
 
   @override
   State<firstpage> createState() => _firstpageState();
+  
 }
+
 
 // ignore: camel_case_types
 class _firstpageState extends State<firstpage> {
+
   String text = 'My Name is Khan and I am not a terrorist';
   String tryText = 'Click';
-
-  final service = FlutterBackgroundService();
   final displayOneController = TextEditingController();
+  
   
   @override
   Widget build(BuildContext context) {
@@ -38,10 +37,6 @@ class _firstpageState extends State<firstpage> {
     );
     }
    
-
-    void locking(){
-      DevicePolicyManager.lockNow();
-    }
 
     void snakky(){
             tryText = displayOneController.text;
@@ -114,7 +109,6 @@ class _firstpageState extends State<firstpage> {
                ),
                TextButton(onPressed:()=>{ setState(() {
                 snakky();
-                locking();
               })}, 
                child: Container(
                 padding: const EdgeInsets.all(15.0),
@@ -133,7 +127,3 @@ class _firstpageState extends State<firstpage> {
   }
 
 }
-
-
-
-
