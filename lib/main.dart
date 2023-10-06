@@ -19,9 +19,6 @@ void main()async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
-  final _fpS = get ();
-
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
