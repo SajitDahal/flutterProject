@@ -1,129 +1,89 @@
-import 'dart:async';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-// ignore: unused_import
 import 'package:speech_to_text/speech_to_text.dart';
-import 'package:voiceapp/speechapi.dart';
 
-// ignore: unused_import
-import 'package:device_policy_manager/device_policy_manager.dart';
-// ignore: camel_case_types
-class firstpage extends StatefulWidget {
-  const firstpage({super.key});
+class FirstPage extends StatefulWidget {
+  const FirstPage({Key? key}) : super(key: key);
 
   @override
-  State<firstpage> createState() => _firstpageState();
-  
+  State<FirstPage> createState() => _FirstPageState();
 }
 
+class _FirstPageState extends State<FirstPage> {
+  final SpeechToText _speech = SpeechToText();
+  bool _isListening = false;
+  String _recognizedText = '';
 
-// ignore: camel_case_types
-class _firstpageState extends State<firstpage> {
-
-  String text = 'My Name is Khan and I am not a terrorist';
-  String tryText = 'Click';
-  final displayOneController = TextEditingController();
-  
-  
   @override
-  Widget build(BuildContext context) {
-    var checkMic = false;
-    
-    void togglerecording() {
-    SpeechApi.toggleRecord(
-      onResult: (text) => setState(() =>
-        (this.text = text)),
-    );
-    }
-   
-
-    void snakky(){
-            tryText = displayOneController.text;
-            var snackbar = SnackBar(content: Text(tryText,style: const TextStyle(
-              color: Colors.lightBlue,
-            ),));
-            Scaffold(body: snackbar);
-            ScaffoldMessenger.of(context).showSnackBar(snackbar);
-      }
-
-    return Scaffold(
-      backgroundColor: Colors.amber,
-      body: 
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [ FloatingActionButton(
-                
-                onPressed:togglerecording,
-                  child: const Icon(Icons.mic),
-                ),
-
-                const SizedBox(
-                  height: 40,
-                ),
-                Text(text, key: const Key('text'), style: const TextStyle(
-                  fontFamily: 'Times New Roman',
-                  fontWeight: FontWeight.w700,
-                ),),
-                const SizedBox(
-                  height: 40,
-                ),
-                 SafeArea(
-                  child:TextField(
-                    cursorColor: Colors.black38,
-                    controller: displayOneController,
-                    decoration: const InputDecoration(
-                      hintText: "Don't type anything",
-                      hintStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                      contentPadding: EdgeInsets.all(12.0),
-                      border:  OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  ),
-                  const SizedBox(
-                  height: 40,
-                ),
-              TextButton(onPressed:()=>{ setState(() {
-                snakky();
-              })}, 
-               child: Container(
-                padding: const EdgeInsets.all(15.0),
-                decoration:const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(25)),
-                  color: Colors.purple,
-                ),
-                child:const Text('Log My Name'),
-               )
-               ),
-               TextButton(onPressed:()=>{ setState(() {
-                snakky();
-              })}, 
-               child: Container(
-                padding: const EdgeInsets.all(15.0),
-                decoration:const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(25)),
-                  color: Colors.purple,
-                ),
-                child:const Text('Register My Name'),
-               )
-               ),
-              ]
-            ),
-          ),
-          
-    );  
+  void initState() {
+    super.initState();
+    _initSpeechRecognition();
   }
 
+  void _initSpeechRecognition() async {
+    bool available = await _speech.initialize(
+      onStatus: (status) {
+        if (status == 'notListening') {
+          setState(() {
+            _isListening = false;
+          });
+          _startListening(); // Feri sunnn
+        }
+      },
+      onError: (errorNotification) {
+        print('Error: $errorNotification');
+      },
+    );
+
+    if (available) {
+      _startListening(); // Start listening initially
+    }
+  }
+
+  void _startListening() async {
+    setState(() {
+      _isListening = true;
+      _recognizedText = ''; // Clear previous recognized text
+    });
+
+    await _speech.listen(
+      onResult: (result) {
+        setState(() {
+          _recognizedText =
+              result.recognizedWords; // Accumulate recognized words
+        });
+
+        if (_recognizedText.toLowerCase().contains("stop listening")) {
+          // Handle the action when "stop listening" is detected
+          setState(() {
+            _isListening = false; // Stop listening
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Your App Title'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Spoken Text',
+                border: OutlineInputBorder(),
+              ),
+              readOnly: true,
+              controller: TextEditingController(text: _recognizedText),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:voiceapp/background.dart';
-import 'package:voiceapp/firstpage.dart';
+import 'package:voiceapp/firstpage.dart'; 
 
-void main()async{
-  
-  runApp(
-    const MyApp()
-    
-    );
-    WidgetsFlutterBinding.ensureInitialized();
-    await initializeService();
-
-    
-    // await initservice();
+void main() async {
+  runApp(const MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-
-      home: firstpage(),
+    return MaterialApp(
+      title: 'voice',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const FirstPage(), 
     );
   }
+}
+
+void yourAppInitialization() {
+ 
 }
